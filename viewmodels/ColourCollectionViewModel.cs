@@ -7,9 +7,10 @@ namespace ColourLab.viewmodels
     {
         private readonly ColourCollectionModel _collectionModel;
 
+        private ObservableCollection<Color> _colours;
         public ObservableCollection<Color> Colours
         {
-            get { return new ObservableCollection<Color>(_collectionModel.Colours); }
+            get { return _colours ?? (_colours = new ObservableCollection<Color>(_collectionModel.Colours)); }
         }
 
         public string Description
