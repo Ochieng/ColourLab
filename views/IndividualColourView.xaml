@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="ColourLab.IndividualColourView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="controlRoot">
+	<StackPanel>
+		<StackPanel.Triggers>
+			<EventTrigger RoutedEvent="StackPanel.MouseEnter">
+				<BeginStoryboard Name="GoUp" HandoffBehavior="Compose">
+					<Storyboard>
+						<Int32Animation Storyboard.TargetName="controlRoot" Storyboard.TargetProperty="ColourWidth" To="100" Duration="0:0:0.6" 
+                                        AccelerationRatio="0.1" DecelerationRatio="0.9" />
+					</Storyboard>
+				</BeginStoryboard>
+			</EventTrigger>
+			<EventTrigger RoutedEvent="StackPanel.MouseLeave">
+				<BeginStoryboard Name="GoDown" HandoffBehavior="Compose">
+					<Storyboard>
+                        <Int32Animation Storyboard.TargetName="controlRoot" Storyboard.TargetProperty="ColourWidth" To="20" Duration="0:0:1" 
+                                        AccelerationRatio="0.9" DecelerationRatio="0.1" >
+                        </Int32Animation>
+<!--
+                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="controlRoot" Storyboard.TargetProperty="ColourWidth">
+                            <EasingInt32KeyFrame KeyTime="0:0:2" Value="20">
+                                <EasingInt32KeyFrame.EasingFunction>
+                                    <BounceEase Bounces="6" Bounciness="12"/>
+                                </EasingInt32KeyFrame.EasingFunction>
+                            </EasingInt32KeyFrame>
+                        </Int32AnimationUsingKeyFrames>
+-->
+                    </Storyboard>
+				</BeginStoryboard>
+			</EventTrigger>
+		</StackPanel.Triggers>
+
+		<ItemsControl ItemsSource="{Binding Colours}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" />
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<StackPanel>
+						<Rectangle Width="{Binding ElementName=controlRoot, Path = ColourWidth}" Height="20">
+							<Rectangle.Fill>
+								<SolidColorBrush Color="{Binding .}" />
+							</Rectangle.Fill>
+						</Rectangle>
+					</StackPanel>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+	</StackPanel>
+</UserControl>
